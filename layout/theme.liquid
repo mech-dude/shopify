@@ -443,7 +443,7 @@ window.SLIDECART_UPDATED = (cart) => {
 };
 */
 
-console.log("Hello world");
+console.log("This is a test")
 
 fetch("https://get.geojs.io/v1/ip/geo.json")
 .then((res) => {return res.json();})
@@ -522,11 +522,11 @@ window.SLIDECART_LOADED = function(cart) {
     <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
   </ul>
 {% render 'back-to-the-top' %}
-<script src="//cool-image-magnifier.product-image-zoom.com/js/core/main.min.js?timestamp=1652342190&shop=juansebastian-teststore.myshopify.com" defer></script>
 {% comment %}Super Bar snippet start{% endcomment %}
 <div id="sabhq-root"></div>
 <script>function superbarLoader(e,t){if(e){var a=document.createElement("script"),d=!1,n=document.getElementsByTagName("head")[0];a.onload=a.onreadystatechange=function(){d||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState||(d=!0,t(),a.onload=a.onreadystatechange=null,n&&a.parentNode&&n.removeChild(a))},a.setAttribute("type","text/javascript"),a.setAttribute("src",e),n.appendChild(a)}};superbarLoader("https://cdn.jsdelivr.net/gh/apphq/superbar-dist@master/superbar.js?"+(new Date).getTime(), function() {window.SUPERBAR_INIT({{ product | json }}, '{{ shop.money_format }}', '{{ product.selected_or_first_available_variant.id }}', {{ cart | json }}, "{{ template }}")})</script>
 {% comment %}Super Bar snippet end{% endcomment %}
 {% include 'ddm_calendar' %} {{ 'ddm_calendar.css' | asset_url | stylesheet_tag }}{%- render 'page-footer.zipifypages', renderctx: 'thm', ocuapp: oneclickupsellapp -%}{% include 'revy-bundle-script' %}
+  <script src="//cool-image-magnifier.product-image-zoom.com/js/core/main.min.js?timestamp=1701890736&shop=juansebastian-teststore.myshopify.com" defer></script>
 </body>
 </html>

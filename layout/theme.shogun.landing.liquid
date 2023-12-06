@@ -8,7 +8,7 @@ This file can be re-written at any time.
 
 <head>
   
-  {% include 'replo-head.liquid' %}
+  {% render 'replo-head' %}
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -197,7 +197,8 @@ This file can be re-written at any time.
   {%- render 'header-scripts.zipifypages', renderctx: 'thm' -%}{{ content_for_header }}
   
   <script>
-  /*// Create "window.Shoppad.apps.infiniteoptions" object if it doesn't already exist
+  {% comment %}
+  // Create "window.Shoppad.apps.infiniteoptions" object if it doesn't already exist
   "Shoppad.apps.infiniteoptions".split(".").reduce(function(o, x) { if (!o[x]) {o[x] ={};} return o[x] }, window);
 
   // Define beforeReady callback
@@ -207,17 +208,15 @@ This file can be re-written at any time.
         return this.nodeType == 3;
       }).wrap('<span class="spb-swatchtooltip"></span>');
     });
-  };*/
+  };
+  {% endcomment %}
   </script>
+  
   {% render 'digismoothie-giftbox' %}
-  <script>
-    GIFTBOX_CUSTOM_LAUNCHER_ICON = "https:{{ "png-transparent-car-rat-fink-hot-rod-stickerbomb-monsters-car-mammal-face-cat-like-mammal-thumbnail.png" | asset_url }}"
-  </script>
-
-        {% render 'digismoothie-candyrack' %}
+  {% render 'digismoothie-candyrack' %}
         
   {% render 'shogun-head' %}
-  {% if template == 'cart' %}{% include "revy-bundle-script" %}{% endif %}
+  {% if template == 'cart' %}{% render "revy-bundle-script" %}{% endif %}
 
 </head>
 
@@ -245,250 +244,246 @@ This file can be re-written at any time.
       });
   </script>
 <script>
-    function setupTimer(elem, target) {
-      if (!elem.innerHTML.includes('(countdown)')) return
+/*
+function setupTimer(elem, target) {
+    if (!elem.innerHTML.includes('(countdown)')) return
+
+    // setup html
+    elem.innerHTML = elem.innerHTML.replace('(countdown)', '<span class="slidecart-custom-countdown"></span>')
+    const countdown = elem.querySelector('.slidecart-custom-countdown')
+
+    // setup countdown functionality
+    const parseUnitTime = timestamp => ({
+      hours: Math.floor(timestamp / 3600000),
+      minutes: Math.floor((timestamp % 3600000) / 60000),
+      seconds: Math.floor((timestamp % 60000) / 1000),
+    })
+
+    let timeLeft = target - new Date().getTime()
+
+    const int = setInterval(() => {
+      if (timeLeft <= 0) {
+        // countdown.remove()
+        return clearInterval(int)
+      }
+
+      timeLeft -= 1000
+      const { hours, minutes, seconds } = parseUnitTime(timeLeft)
+      countdown.innerText = [hours, minutes, seconds].map(time => time.toString().padStart(2, '0')).join(':')
+    }, 1000)
+  }
+
+window.SLIDECART_LOADED = function(cart) {
+    const btn = document.querySelectorAll("#slidecarthq .upsell-add button");
+    if(btn){setInterval(function (){btn.forEach(b=>{b.childNodes[1].textContent = "Añadir"})}, 100);}
+
+    setInterval(function clickButton() {
+        click_event = new Event('click', {bubbles: true});
+        btn_element = document.querySelector('button.slick-arrow.slick-next');
+        if(btn_element) btn_element.dispatchEvent(click_event);
+    }, 4500);
+
+  if (!'{{ settings.slidecart_countdown_date }}') return
+  const target = new Date('{{ settings.slidecart_countdown_date }}').getTime()
+  const elems = document.querySelectorAll('#slidecarthq .announcements p')
+  elems.forEach(e => setupTimer(e, target))
+}
+
+
+window.SLIDECART_OPENED = () => {
+
   
-      // setup html
-      elem.innerHTML = elem.innerHTML.replace('(countdown)', '<span class="slidecart-custom-countdown"></span>')
-      const countdown = elem.querySelector('.slidecart-custom-countdown')
-  
-      // setup countdown functionality
-      const parseUnitTime = timestamp => ({
-        hours: Math.floor(timestamp / 3600000),
-        minutes: Math.floor((timestamp % 3600000) / 60000),
-        seconds: Math.floor((timestamp % 60000) / 1000),
-      })
-  
-      let timeLeft = target - new Date().getTime()
-  
-      const int = setInterval(() => {
-        if (timeLeft <= 0) {
-          // countdown.remove()
-          return clearInterval(int)
-        }
-  
-        timeLeft -= 1000
-        const { hours, minutes, seconds } = parseUnitTime(timeLeft)
-        countdown.innerText = [hours, minutes, seconds].map(time => time.toString().padStart(2, '0')).join(':')
-      }, 1000)
+const calendar = document.querySelector('.identixweb-order-delivery style'); 
+const style2 =   document.querySelector('.iw-calendar.iw-calander-active');
+if (calendar){
+calendar.style.display = "none";
+}
+const t = document.querySelector('p.custom_element'), foot = document.querySelector("#slidecarthq .footer button");
+if(t && foot) foot.insertAdjacentElement('beforebegin',t);
+
+    const clickListener = () => clickButtonOnce(button);
+    const noteInput = document.querySelector('#slidecarthq .note-body textarea');
+    const form = document.querySelector('#slidecart-checkout-form');
+    const button = document.querySelector('#slidecarthq .note-trigger');
+    const checkout_btn = document.querySelector("#slidecarthq  footer > button");
+
+
+    function clickButtonOnce(button) {
+        button.click();
+        button.removeEventListener('click', clickListener);
     }
   
-  window.SLIDECART_LOADED = function(cart) {
-      const btn = document.querySelectorAll("#slidecarthq .upsell-add button");
-      if(btn){setInterval(function (){btn.forEach(b=>{b.childNodes[1].textContent = "Añadir"})}, 100);}
-  
-      setInterval(function clickButton() {
-          click_event = new Event('click', {bubbles: true});
-          btn_element = document.querySelector('button.slick-arrow.slick-next');
-          if(btn_element) btn_element.dispatchEvent(click_event);
-      }, 4500);
-  
-    if (!'{{ settings.slidecart_countdown_date }}') return
-    const target = new Date('{{ settings.slidecart_countdown_date }}').getTime()
-    const elems = document.querySelectorAll('#slidecarthq .announcements p')
-    elems.forEach(e => setupTimer(e, target))
-  }
-  
-  /*
-  window.SLIDECART_OPENED = () => {
-  
+    if(!noteInput){
+      console.log("note not opened")
+      setTimeout(function () {
+      button.addEventListener('DOMContentLoaded', clickListener());
+      console.log("note opened")
+      }, 2000);
+    }
     
-  const calendar = document.querySelector('.identixweb-order-delivery style'); 
-  const style2 =   document.querySelector('.iw-calendar.iw-calander-active');
-  if (calendar){
-  calendar.style.display = "none";
-  }
-  const t = document.querySelector('p.custom_element'), foot = document.querySelector("#slidecarthq .footer button");
-  if(t && foot) foot.insertAdjacentElement('beforebegin',t);
-  
-      const clickListener = () => clickButtonOnce(button);
-      const noteInput = document.querySelector('#slidecarthq .note-body textarea');
-      const form = document.querySelector('#slidecart-checkout-form');
-      const button = document.querySelector('#slidecarthq .note-trigger');
-      const checkout_btn = document.querySelector("#slidecarthq  footer > button");
-  
-  
-      function clickButtonOnce(button) {
-          button.click();
-          button.removeEventListener('click', clickListener);
-      }
-    
-      if(!noteInput){
-        console.log("note not opened")
-        setTimeout(function () {
-        button.addEventListener('DOMContentLoaded', clickListener());
-        console.log("note opened")
-        }, 2000);
-      }
-      
-      function checkInput() {
-          if (document.querySelector('#slidecarthq .note-body textarea').value == '') {
-          checkout_btn.setAttribute('disabled', true);
-          //console.log("disabled")
-          } else {
-          checkout_btn.removeAttribute('disabled');
-          //console.log("enabled")
-          }
-      }
-  
-      if(checkout_btn){setInterval(checkInput, 500);}
-  
-  }*/
-  
-  
-    /*function getDcCode () {
-      let cookies = document.cookie?.split(";");
-      let dcFound = '';
-      cookies.forEach(cookie => {
-        let [cookieTitle, cookieVal] = cookie.split("=");
-        if (cookieTitle.trim() === "discount_code") {
-          dcFound = cookieVal;
+    function checkInput() {
+        if (document.querySelector('#slidecarthq .note-body textarea').value == '') {
+        checkout_btn.setAttribute('disabled', true);
+        //console.log("disabled")
+        } else {
+        checkout_btn.removeAttribute('disabled');
+        //console.log("enabled")
         }
-      })
-      return dcFound;
-    }*/
-  
-  
-  const EMPTY_SCREEN_UPSELLS_HEADING = ''
-  const UPSELL_ADD_BUTTON_TEXT = 'ADD'
-  
-  
-  async function initEmptyUpsellsScreen() {
-  	const emptyScreen = document.querySelector('#slidecarthq .empty')
-  
-  	if (!emptyScreen) return
-  
-  	const upsells = emptyScreen.querySelectorAll('[data-handle]')
-  	const upsellDivs = Array(upsells.length).fill(undefined)
-  	const promises = []
-  
-  	for (let i = 0; i < upsells.length; i++) {
-  		promises.push(
-  			getProductInfo(upsells[i].dataset.handle)
-  				.then(data => {
-  					if (!data) return
-  					upsellDivs[i] = buildUpsell(data)
-  				})
-  		)
-  	}
-  
-  	await Promise.all(promises)
-  
-  	emptyScreen.innerHTML = `
-  	<div class="upsells">
-  		${EMPTY_SCREEN_UPSELLS_HEADING ? '<div class="upsells-header"><h2>${EMPTY_SCREEN_UPSELLS_HEADING}</h2></div>' : ''}
-  		<div class="upsells-stacked upsells-on-empty-screen">
-  		${upsellDivs.filter(d => d).join('')}
-  		</div>  
-  	</div>
-  `
-  }
-  
-  const formatPrice = price => '{{ shop.money_format }}'.replace('{% raw %}{{amount}}{% endraw %}', price / 100)
-  
-  function buildUpsell({ id, src, name, price, prodHandle }) {
-  	return `
-  		<div class="upsell-item"  data-variant-id="${id}" style="text-align: left; margin: 1rem auto;">
-  			<div class="upsell-image">
-  				<a href="${prodHandle}">
-  					<img alt="${name}" class="small" src="${src}">
-  				</a>
-  			</div>
-  		<div class="upsell-text">
-  			<h3><a href="${prodHandle}">${name}</a></h3>
-  			<div class="upsell-text-prices">
-  				<p><span class="money">${formatPrice(price)}</span></p>
-  			</div>
-  		</div>
-  		<div class="upsell-add">
-  			<form action="/cart/add">
-  				<input type="hidden" name="id" value="${id}" />
-  				<input type="hidden" name="quantity" value="1" />
-  				<button type="submit">
-  					<svg style="margin: 0; margin-top: -2px; margin-right: 5px;" width="10" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M11 5H7V1a1 1 0 00-2 0v4H1a1 1 0 000 2h4v4a1 1 0 002 0V7h4a1 1 0 000-2z" fill="currentColor" fill-rule="nonzero"></path></svg>
-  					${UPSELL_ADD_BUTTON_TEXT}
-  				</button>
-  			</form>
-  		</div>
-  	</div>`
-  }
-  
-  async function getProductInfo(prodHandle) {
-  	try {
-  		const data = await fetch(`/products/${prodHandle}.js`).then(res => res.json())
-  
-  		let [{ id, featured_image, name, price }] = data.variants // Get this info from the first variant found
-  
-          console.log(data)
-  
-  		return { id, src: featured_image?.src ?? data.images[0] , name, price, prodHandle }
-  	} catch (e) {
-  		console.log(e)
-  	}
-  }
-  
-  // window.SLIDECART_UPDATED = ({ item_count, items }) => {
-  //   if (!item_count || item_count === 1 && items[0].product_type === 'Slidecart - Shipping Protection') return initEmptyUpsellsScreen()
-  // }
-  
-  // window.SLIDECART_UPDATED = ({item_count}) =>{
-      // setInterval(function (){
-      // const btn = document.querySelectorAll("#slidecarthq .upsell-add button");
-      //     if(btn){btn.forEach(b=>{b.childNodes[1].textContent = "Añadir"})}
-      // }, 100);
-  
-    // let dcCode = getDcCode();
-    // let scDcCode = window.SLIDECART_STATE().discountCode;
-    // let ScDcBoxSetting = window.SLIDECART_STATE()?.settings.discount_box;
-    
-    // if (dcCode.length) {
-    //   if (!scDcCode || !(scDcCode.toLowerCase() === dcCode.toLowerCase())) {
-    //     if (!ScDcBoxSetting) {
-    //       window.SLIDECART_STATE().settings.discount_box = true;
-    //       window.SLIDECART_APPLY_DISCOUNT(dcCode);
-    //     } else {
-    //       window.SLIDECART_APPLY_DISCOUNT(dcCode);
-    //     }
-    //   }
-    // }
-    
-    // let cartTotalPrice = window.SLIDECART_STATE().cart.total_price;
-    // cartTotalPrice = cartTotalPrice/100;
-    
-    // const rewards = window.SLIDECART_STATE().settings.rewards_tiers;
-    // rewards.forEach(reward => {
-    //   console.log(reward);
-    // });
-  // }
-  </script>
-<script src="//cdn.codeblackbelt.com/widgets/js/core/collections-add-to-cart/main.min.js?shop=juansebastian-teststore.myshopify.com" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded", (event) => {
-  function downloadFile(url, fileName) {
-    fetch(url)
-      .then((res) => res.blob())
-      .then((res) => {
-        const aElement = document.createElement('a');
-        const href = URL.createObjectURL(res);
-        aElement.href = href;
-        aElement.download = fileName;
-        aElement.style.display = 'none'; // Hide the link
-        document.body.appendChild(aElement); // Append the link to the document
-        aElement.click();
-        document.body.removeChild(aElement); // Remove the link from the document
-        URL.revokeObjectURL(href);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
+    }
 
-  document.querySelector('button.custom-download').addEventListener('click', function () {
-    downloadFile('https://cdn.shopify.com/s/files/1/0608/3588/9386/files/Juan_Sebastian_Store-logos_black_c7866735-4573-4efd-b266-b5bfeb904fb8.png?v=1666614562', 'image.png');
+    if(checkout_btn){setInterval(checkInput, 500);}
+
+}
+
+
+function getDcCode () {
+    let cookies = document.cookie?.split(";");
+    let dcFound = '';
+    cookies.forEach(cookie => {
+      let [cookieTitle, cookieVal] = cookie.split("=");
+      if (cookieTitle.trim() === "discount_code") {
+        dcFound = cookieVal;
+      }
+    })
+    return dcFound;
+}
+
+
+window.SLIDECART_UPDATED = ({ item_count, items }) => {
+   if (!item_count || item_count === 1 && items[0].product_type === 'Slidecart - Shipping Protection') return initEmptyUpsellsScreen()
+}
+
+window.SLIDECART_UPDATED = ({item_count}) =>{
+    setInterval(function (){
+    const btn = document.querySelectorAll("#slidecarthq .upsell-add button");
+        if(btn){btn.forEach(b=>{b.childNodes[1].textContent = "Añadir"})}
+    }, 100);
+
+  let dcCode = getDcCode();
+  let scDcCode = window.SLIDECART_STATE().discountCode;
+  let ScDcBoxSetting = window.SLIDECART_STATE()?.settings.discount_box;
+  
+  if (dcCode.length) {
+    if (!scDcCode || !(scDcCode.toLowerCase() === dcCode.toLowerCase())) {
+      if (!ScDcBoxSetting) {
+        window.SLIDECART_STATE().settings.discount_box = true;
+        window.SLIDECART_APPLY_DISCOUNT(dcCode);
+      } else {
+        window.SLIDECART_APPLY_DISCOUNT(dcCode);
+      }
+    }
+  }
+  
+  let cartTotalPrice = window.SLIDECART_STATE().cart.total_price;
+  cartTotalPrice = cartTotalPrice/100;
+  
+  const rewards = window.SLIDECART_STATE().settings.rewards_tiers;
+  rewards.forEach(reward => {
+    console.log(reward);
   });
+}
+
+
+
+let initTierAmount = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM LOADED")
+    const checkbox = document.querySelector("#slidecarthq input#shipping-protection");
+
+    /*setInterval(() => {
+        if (checkbox) {
+            console.log(checkbox);
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    console.log("updated checked");
+                    SLIDECART_UPDATE();
+                } else {
+                    console.log("updated unchecked");
+                    SLIDECART_UPDATE();
+                }
+            });
+        }
+    }, 100);
+  
 });
 
+
+window.SLIDECART_LOADED = () => {
+    //Grab default rewards_tiers
+    initTierAmount = SLIDECART_STATE()?.settings?.rewards_tiers.map(reward => reward.amount) || [];  
+    return initTierAmount;
+};
+
+window.SLIDECART_UPDATED = (cart) => {
+    var newCart = cart;
+    //Save default rewards_tiers
+    const newTier = initTierAmount;
+
+    //Grab shipping product info
+    const shippingAmount = parseFloat(SLIDECART_STATE().settings.shipping_protection_amount);
+    const shippingProductId = parseFloat(SLIDECART_STATE().settings.shipping_protection_product_id);
+    const shippingCheck =  newCart.items.find(item => item.id === shippingProductId);
+
+    //Check if shipping product exists in cart
+    if(shippingCheck){
+        SLIDECART_STATE()?.settings.rewards_tiers?.forEach((tier, index) => {
+            tier.amount = newTier[index];
+            tier.amount = parseFloat(tier.amount) + shippingAmount;
+        });
+        // Logging the modified rewards_tiers
+        console.log(SLIDECART_STATE()?.settings?.rewards_tiers.map(reward => reward.amount));
+    } else {
+        SLIDECART_STATE()?.settings.rewards_tiers?.forEach((tier, index) => {
+            tier.amount = newTier[index];
+            tier.amount = parseFloat(tier.amount);
+        });
+        // Logging the default rewards_tiers
+        console.log(SLIDECART_STATE()?.settings?.rewards_tiers.map(reward => reward.amount));
+    }
+
+
+    window.SLIDECART_SET_CART(newCart);
+
+};
+*/
+
+fetch("https://get.geojs.io/v1/ip/geo.json")
+.then((res) => {return res.json();})
+.then((data) => {
+  window.SLIDECART_UPDATED = function() {
+      const notes = {
+        'fr': 'Livraison 2-5 jours offerte en France sur les commandes de + de 30€',
+        'ca': 'Free Canada 4-9 day shipping on orders above 40 $CAD',
+        'us': 'Free US 4-9 day shipping on orders above 40 $USD'
+        }
+      SLIDECART_STATE()?.announcements?.forEach((announcement, index) => {
+          //console.log(data.country_code.toLowerCase());
+          if (data.country_code === 'FR') {
+            console.log("france")
+            announcement.text = notes['fr'];
+          } else if(data.country_code === 'CA') {
+            console.log("canada")
+            announcement.text = notes['ca'];
+          } else if(data.country_code === 'US') {
+            console.log("usa")
+            announcement.text = notes['us'];
+          } else{
+            console.log("not found")
+            return
+          }
+      });
+};
+})
+.catch((error) => {console.error("Error:", error);});
+
+
+
+window.SLIDECART_LOADED = function(cart) {          
+  window.SLIDECART_STATE().settings.shipping_protection_enable_default = true
+}
 </script>
+<script src="//cdn.codeblackbelt.com/widgets/js/core/collections-add-to-cart/main.min.js?shop=juansebastian-teststore.myshopify.com" defer></script>
 <script type="application/json" data-cart-routes>
     {
       "cartUrl": "{{ routes.cart_url }}",
@@ -496,9 +491,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       "cartChangeUrl": "{{ routes.cart_change_url }}"
     }
   </script>
-<script src="//cool-image-magnifier.product-image-zoom.com/js/core/main.min.js?timestamp=1652342190&shop=juansebastian-teststore.myshopify.com" defer></script>
 <script>function superbarLoader(e,t){if(e){var a=document.createElement("script"),d=!1,n=document.getElementsByTagName("head")[0];a.onload=a.onreadystatechange=function(){d||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState||(d=!0,t(),a.onload=a.onreadystatechange=null,n&&a.parentNode&&n.removeChild(a))},a.setAttribute("type","text/javascript"),a.setAttribute("src",e),n.appendChild(a)}};superbarLoader("https://cdn.jsdelivr.net/gh/apphq/superbar-dist@master/superbar.js?"+(new Date).getTime(), function() {window.SUPERBAR_INIT({{ product | json }}, '{{ shop.money_format }}', '{{ product.selected_or_first_available_variant.id }}', {{ cart | json }}, "{{ template }}")})</script>
-<script src="//video-background.incubate.dev/js/core/main.min.js?timestamp=1693209847&shop=juansebastian-teststore.myshopify.com" defer></script>
+<script src="//cool-image-magnifier.product-image-zoom.com/js/core/main.min.js?timestamp=1701890736&shop=juansebastian-teststore.myshopify.com" defer></script>
   <style type="text/css">
     body, html {
       width: 100% !important;
