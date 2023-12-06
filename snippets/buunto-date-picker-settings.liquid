@@ -1,0 +1,202 @@
+{% comment %}
+
+DO NOT MODIFY THIS TEMPLATE. This file is managed automatically by Buunto Date Picker. Any modification will be erased eventually.
+
+{% endcomment %}
+
+<script type="text/javascript">
+
+window.Buunto = window.Buunto || {};
+
+window.Buunto.datePicker = window.Buunto.datePicker || {};
+
+window.Buunto.datePicker.settings = {
+  "styles": {
+    "arrowIconColor": "#000000",
+    "errorFontColor": "#8b0000",
+    "fieldLabelColor": "",
+    "headerFontColor": "#333333",
+    "dropdownFontSize": "14px",
+    "errorBorderColor": "#961f1f",
+    "calendarBoxShadow": "0 0 5px rgba(0,0,0,0.15)",
+    "dropdownTextColor": "#333333",
+    "fieldHelpTextColor": "",
+    "calendarBorderColor": "",
+    "dropdownBorderColor": "#cccccc",
+    "dropdownBorderWidth": "1px",
+    "headerDaysFontColor": "#333333",
+    "calendarBorderRadius": "10px",
+    "dayHoveringFontColor": "#333333",
+    "daySelectedFontColor": "#ffffff",
+    "fieldLabelFontWeight": "bold",
+    "headerDaysFontWeight": "bold",
+    "dayAvailableFontColor": "#333333",
+    "previewBackgroundColor": "#ffffff",
+    "calendarBackgroundColor": "#ffffff",
+    "dayUnavailableFontColor": "#aaaaaa",
+    "dropdownBackgroundColor": "#ffffff",
+    "dayHoveringBackgroundColor": "#eeeeee",
+    "daySelectedBackgroundColor": "#333333"
+  },
+  "currency": "EUR",
+  "languages": [
+    {
+      "locale": "en",
+      "primary": true,
+      "messages": {
+        "soldOut": "sold out",
+        "viewMap": "View map",
+        "dateTagLabel": "Delivery Date",
+        "timeSlotLabel": "Delivery time:",
+        "datePickerLabel": "Delivery date:",
+        "timeSlotTagLabel": "Delivery Time",
+        "dayOfWeekTagLabel": "Delivery Day",
+        "noDateSelectedError": "Please select a delivery date.",
+        "pickupLocationLabel": "Pickup location:",
+        "noAvailableDatesError": "There are currently no dates available for this product.",
+        "pickupLocationTagLabel": "Pickup Location",
+        "enterYourPostcodeOrCity": "Enter your postcode or city...",
+        "noTimeSlotSelectedError": "Please select a delivery time.",
+        "singleDatePerOrderMessage": "You can only choose one delivery date per order.",
+        "dropdownDefaultOptionLabel": "Please select...",
+        "timeSlotDropdownDefaultOptionLabel": "Please select..."
+      },
+      "commonMessages": {
+        "methodTagLabel": "Method",
+        "methodStorePickupLabel": "Store pickup",
+        "methodLocalDeliveryLabel": "Local delivery"
+      },
+      "pickupMessages": {
+        "soldOut": "sold out",
+        "viewMap": "View map",
+        "dateTagLabel": "Pickup Date",
+        "timeSlotLabel": "Pickup time:",
+        "datePickerLabel": "Pickup date:",
+        "timeSlotTagLabel": "Pickup Time",
+        "dayOfWeekTagLabel": "Pickup Day",
+        "noDateSelectedError": "Please select a pickup date.",
+        "pickupLocationLabel": "Pickup location:",
+        "noAvailableDatesError": "There are currently no dates available for this product.",
+        "pickupLocationTagLabel": "Pickup Location",
+        "enterYourPostcodeOrCity": "Enter your postcode or city...",
+        "noTimeSlotSelectedError": "Please select a pickup time.",
+        "singleDatePerOrderMessage": "You can only choose one pickup date per order.",
+        "dropdownDefaultOptionLabel": "Please select...",
+        "timeSlotDropdownDefaultOptionLabel": "Please select..."
+      }
+    }
+  ],
+  "cutOffTime": "23:59",
+  "pickerType": "CALENDAR",
+  "showOnPage": "PRODUCT",
+  "timezoneId": "America/New_York",
+  "disabledDates": [],
+  "anchorPosition": "BEFORE",
+  "anchorSelector": "#slidecarthq .footer button",
+  "visibilityType": "SPECIFIC_THEMES",
+  "placementMethod": "MANUAL",
+  "visibleOnThemes": [
+    {
+      "id": 128644120810,
+      "name": "Debut (test)"
+    }
+  ],
+  "showDayOfWeekTag": false,
+  "availableWeekDays": [
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+    "SUNDAY"
+  ],
+  "cutOffByDayVersion": 2,
+  "singleDatePerOrder": false,
+  "dateDeselectedFirst": false,
+  "mandatoryDateSelect": true,
+  "languageSupportVersion": 2,
+  "lastAvailableDateInDays": 90,
+  "timeSlotDeselectedFirst": false,
+  "firstAvailableDateInDays": 1,
+  "hideDateSelectorWhenEmpty": true,
+  "updateAttributesViaApiCall": true,
+  "copyOrderTagsAsOrderAttributes": true
+};
+
+{%- if product -%}
+
+    window.Buunto.datePicker.productCollections = {{ product.collections | map: "id" | json }};
+
+    window.Buunto.datePicker.productTags = {{ product.tags | json }};
+
+    window.Buunto.datePicker.productOptions = {{ product.options | json }};
+
+    window.Buunto.datePicker.productVariants = {{ product.variants | json }};
+
+{%- endif -%}
+
+{%- if cart -%}
+
+    {% assign cart_product_tags = '' | split: '' %}
+    {% assign cart_product_collections = '' | split: '' %}
+    {% for item in cart.items %}
+
+        {% for tag in item.product.tags %}
+            {% assign cart_product_tags = tag | concat: cart_product_tags %}
+        {% endfor %}
+
+        {% assign collection_ids = item.product.collections | map: 'id' %}
+        {% for id in collection_ids %}
+            {% assign cart_product_collections = id | concat: cart_product_collections %}
+        {% endfor %}
+
+    {% endfor %}
+
+    window.Buunto.datePicker.cartTags = {{ cart_product_tags | uniq | json }};
+
+    window.Buunto.datePicker.cartCollections = {{ cart_product_collections | uniq | json }};
+
+    window.Buunto.datePicker.cartItemCount = {{ cart.items.size }};
+
+    {% assign selected_method = "" %}
+    {% assign selected_date = "" %}
+    {% assign selected_time_slot = "" %}
+
+    {% assign method_tag_label = "Method" %}
+    {% assign delivery_date_tag_label = "Delivery Date" %}
+    {% assign pickup_date_tag_label = "Pickup Date" %}
+    {% assign delivery_time_slot_tag_label = "Delivery Time" %}
+    {% assign pickup_time_slot_tag_label = "Pickup Time" %}
+
+    {% for item in cart.items %}
+
+        {%- if item.properties[method_tag_label] and selected_method == "" -%}
+            {% assign selected_method = item.properties[method_tag_label] %}
+        {%- endif %}
+
+        {%- if item.properties[delivery_date_tag_label] and selected_date == "" -%}
+            {% assign selected_date = item.properties[delivery_date_tag_label] %}
+        {%- endif %}
+
+        {%- if item.properties[pickup_date_tag_label] and selected_date == "" -%}
+            {% assign selected_date = item.properties[pickup_date_tag_label] %}
+        {%- endif %}
+
+        {%- if item.properties[delivery_time_slot_tag_label] and selected_time_slot == "" -%}
+            {% assign selected_time_slot = item.properties[delivery_time_slot_tag_label] %}
+        {%- endif %}
+
+        {%- if item.properties[pickup_time_slot_tag_label] and selected_time_slot == "" -%}
+            {% assign selected_time_slot = item.properties[pickup_time_slot_tag_label] %}
+        {%- endif %}
+
+    {% endfor %}
+
+    window.Buunto.datePicker.selectedMethod = {{ selected_method | json }};
+    window.Buunto.datePicker.selectedDate = {{ selected_date | json }};
+    window.Buunto.datePicker.selectedTimeSlot = {{ selected_time_slot | json }};
+
+{%- endif -%}
+
+</script>

@@ -1,0 +1,25 @@
+{% comment %}
+  The contents of the cart.liquid template can be found in /sections/cart-template.liquid
+{% endcomment %}
+
+{% section 'cart-template' %}
+
+<script>
+  const btns = document.querySelectorAll('.cart__submit-controls input[type="submit"]')
+
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', async e => {
+        e.preventDefault()
+
+        e.target.value = "Loading..."
+        e.target.disabled = true
+        await jQuery.post(window.Shopify.routes.root + 'cart/update.js', {
+          attributes: {
+            'Gift wrap': 'Yes'
+          }
+        }, null, 'json')
+        e.target.disabled = false
+        e.target.click()
+      }, { once: true })
+  }  
+</script>

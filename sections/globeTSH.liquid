@@ -1,0 +1,34 @@
+<h2 class="outline-color-2">TSH GLOBE SECTION</h2>
+{{ 'threejs.js' | asset_url | script_tag }}
+{{ 'globeTSH.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Globe TSH",
+  "tag": "section",
+  "class": "tsh-globe",
+  "settings": [
+    {
+      "type": "number",
+      "id": "nodes",
+      "label": "Amount of nodes in Globe",
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "TSH Globe",
+      "settings": {
+        "nodes": 3
+      }
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+  console.log("Globe TSH")
+{% endjavascript %}

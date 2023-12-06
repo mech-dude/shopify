@@ -1,0 +1,751 @@
+{%- comment -%}
+  {
+    "name": "Table 02",
+    "author": "PusherCommerce"
+    "description": "Please DO NOT copy in any form. Any act of copying will be sued and held responsible with the law",
+  }
+{%- endcomment -%}
+
+{%- capture minify -%}
+  {% comment %}
+    For Heading, Subheading, Button, Divider
+  {% endcomment %}
+  <style>
+    #psb-{{ section.id }} .psb-utilities-heading__heading,
+    #psb-{{ section.id }} .psb-utilities-heading__subheading,
+    #psb-{{ section.id }} .psb-btn-wrapper {
+      text-align: {{ section.settings.text_align_mobile }};
+    }
+
+    #psb-{{ section.id }} .psb-divider-wrapper {
+      display: flex;
+      justify-content: {{ section.settings.text_align_mobile }};
+      align-items: center;
+    }
+
+    #psb-{{ section.id }} .psb-utilities-heading__heading {
+      color: var(--heading-color);
+    }
+
+    #psb-{{ section.id }} .psb-utilities-heading__subheading {
+      color: var(--subheading-color);
+    }
+
+    #psb-{{ section.id }} .psb-divider {
+      display: inline-block;
+      width: 120px;
+      height: 4px;
+      background-color: var(--divider-color);
+    }
+
+
+    @media (min-width: 768px) {
+      #psb-{{ section.id }} .psb-utilities-heading__heading,
+      #psb-{{ section.id }} .psb-utilities-heading__subheading,
+      #psb-{{ section.id }} .psb-btn-wrapper {
+        text-align: {{ section.settings.text_align }};
+      }
+
+      #psb-{{ section.id }} .psb-divider-wrapper {
+        justify-content: {{ section.settings.text_align }};
+      }
+
+      #psb-{{ section.id }} .psb-divider {
+        width: 185px;
+      }
+    }
+  </style>
+
+  {% comment %} Section style  {% endcomment %}
+  <style>
+    #psb-{{ section.id }} {
+      background-color: {{ section.settings.background_color }};
+      padding-top: {{ section.settings.section_padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.section_padding_bottom_mobile }}px;
+    }
+
+    #psb-{{ section.id }} .psb-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    #psb-{{ section.id }} table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #psb-{{ section.id }} td,
+    #psb-{{ section.id }} th {
+      border: {{ section.settings.table_border_weight }}px solid {{ section.settings.table_border_color }};
+      text-align: {{ section.settings.table_content_align }};
+      height: {{ section.settings.table_height }}px;
+      padding: 15px;
+    }
+
+    #psb-{{ section.id }} th {
+      color: {{ section.settings.table_heading_color }};
+    }
+
+    #psb-{{ section.id }} td {
+      color: {{ section.settings.table_value_color }};
+    }
+
+    @media only screen and (min-width: 768px) {
+      #psb-{{ section.id }} {
+        padding-top: {{ section.settings.section_padding_top }}px;
+        padding-bottom: {{ section.settings.section_padding_bottom }}px;
+      }
+    }
+  </style>
+{%- endcapture -%}
+{{ minify | strip_newlines }}
+
+<div id="psb-{{ section.id }}" class="psb-{{ section.id }} psb-section psb-table-table-02" style="display: none;">
+  <div class="{{ section.settings.container_width }}">
+    {% comment %} Heading module  {% endcomment %}
+    {% if section.settings.heading != blank or section.settings.subheading != blank %}
+      <div class="psb-table-heading psb-block-space">
+        <{{ section.settings.heading_tag }}
+          class="psb-utilities-heading__heading"
+          style="--heading-color: {{ section.settings.heading_color }}"
+        >
+          {{ section.settings.heading }}
+        </{{ section.settings.heading_tag }}>
+        <div
+          class="psb-utilities-heading__subheading psb-rte psb-block-space"
+          style="--subheading-color: {{ section.settings.subheading_color }}"
+        >
+          {{ section.settings.subheading }}
+        </div>
+      </div>
+    {% endif %}
+    <div class="psb-row">
+      <div class="psb-table-wrapper">
+        <table>
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'table_heading' %}
+                {% if block.settings.heading_1 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_1 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_1 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_2 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_2 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_2 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_3 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_3 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_3 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_4 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_4 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_4 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_5 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_5 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_5 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_6 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_6 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_6 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_7 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_7 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_7 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_8 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_8 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_8 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_9 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_9 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_9 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+
+                {% if block.settings.heading_10 != blank %}
+                  <tr>
+                    <th>
+                      <{{ block.settings.heading_tag }}>
+                        {{ block.settings.heading_10 }}
+                      </{{ block.settings.heading_tag }}>
+                    </th>
+                    {% for block in section.blocks %}
+                      {% case block.type %}
+                        {% when 'table_value' %}
+                          <td class="psb-rte">{{ block.settings.value_10 }}</td>
+                      {% endcase %}
+                    {% endfor %}
+                  </tr>
+                {% endif %}
+            {% endcase %}
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "⚡︎PSB: Table 02",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container_width",
+      "options": [
+        {
+          "value": "psb-container",
+          "label": "Container"
+        },
+        {
+          "value": "psb-container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "psb-container-fullwidth",
+          "label": "Container Fullwidth"
+        }
+      ],
+      "default": "psb-container",
+      "label": "Container width"
+    },
+    {
+      "type": "header",
+      "content": "Heading settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Talk about your brand",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "div",
+          "label": "Div"
+        }
+      ],
+      "default": "h2",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "default": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+      "label": "Subheading"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#585454"
+    },
+    {
+      "type": "header",
+      "content": "Main settings"
+    },
+    {
+      "type": "select",
+      "id": "table_content_align",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Table content align"
+    },
+    {
+      "type": "range",
+      "id": "table_height",
+      "min": 10,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Table heading height",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "table_border_weight",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Table border weight",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color",
+      "id": "table_border_color",
+      "label": "Table border color",
+      "default": "#ccc"
+    },
+    {
+      "type": "color",
+      "id": "table_heading_color",
+      "label": "Table heading color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "table_value_color",
+      "label": "Table value color",
+      "default": "#585454"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "transparent"
+    },
+    {
+      "type": "header",
+      "content": "💻 Desktop"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Text align",
+      "info": "For section heading"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Section padding-top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Section padding-bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "📱 Mobile"
+    },
+    {
+      "type": "select",
+      "id": "text_align_mobile",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Text align",
+      "info": "For section heading"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top_mobile",
+      "min": 0,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Section padding-top",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom_mobile",
+      "min": 0,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Section padding-bottom",
+      "default": 35
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Table heading",
+      "type": "table_heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            },
+            {
+              "value": "div",
+              "label": "Div"
+            }
+          ],
+          "default": "h2",
+          "label": "Heading size"
+        },
+        {
+          "type": "text",
+          "id": "heading_1",
+          "label": "Heading 1"
+        },
+        {
+          "type": "text",
+          "id": "heading_2",
+          "label": "Heading 2"
+        },
+        {
+          "type": "text",
+          "id": "heading_3",
+          "label": "Heading 3"
+        },
+        {
+          "type": "text",
+          "id": "heading_4",
+          "label": "Heading 4"
+        },
+        {
+          "type": "text",
+          "id": "heading_5",
+          "label": "Heading 5"
+        },
+        {
+          "type": "text",
+          "id": "heading_6",
+          "label": "Heading 6"
+        },
+        {
+          "type": "text",
+          "id": "heading_7",
+          "label": "Heading 7"
+        },
+        {
+          "type": "text",
+          "id": "heading_8",
+          "label": "Heading 8"
+        },
+        {
+          "type": "text",
+          "id": "heading_9",
+          "label": "Heading 9"
+        },
+        {
+          "type": "text",
+          "id": "heading_10",
+          "label": "Heading 10"
+        }
+      ]
+    },
+    {
+      "name": "Table values",
+      "type": "table_value",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "value_1",
+          "label": "Value 1"
+        },
+        {
+          "type": "richtext",
+          "id": "value_2",
+          "label": "Value 2"
+        },
+        {
+          "type": "richtext",
+          "id": "value_3",
+          "label": "Value 3"
+        },
+        {
+          "type": "richtext",
+          "id": "value_4",
+          "label": "Value 4"
+        },
+        {
+          "type": "richtext",
+          "id": "value_5",
+          "label": "Value 5"
+        },
+        {
+          "type": "richtext",
+          "id": "value_6",
+          "label": "Value 6"
+        },
+        {
+          "type": "richtext",
+          "id": "value_7",
+          "label": "Value 7"
+        },
+        {
+          "type": "richtext",
+          "id": "value_8",
+          "label": "Value 8"
+        },
+        {
+          "type": "richtext",
+          "id": "value_9",
+          "label": "Value 9"
+        },
+        {
+          "type": "richtext",
+          "id": "value_10",
+          "label": "Value 10"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "⚡︎PSB: Table 02",
+      "settings": {
+        "heading": "",
+        "subheading": ""
+      },
+      "blocks": [
+        {
+          "type": "table_heading",
+          "settings": {
+            "heading_tag": "h4",
+            "heading_1": "Device",
+            "heading_2": "Price",
+            "heading_3": "Resolution",
+            "heading_4": "Processor",
+            "heading_5": "OS"
+          }
+        },
+        {
+          "type": "table_value",
+          "settings": {
+            "value_1": "<p>Iphone 12<\/p>",
+            "value_2": "<p>$699<\/p>",
+            "value_3": "<p>5.7 in<\/p>",
+            "value_4": "<p>A14<\/p>",
+            "value_5": "<p>iOS 16<\/p>"
+          }
+        },
+        {
+          "type": "table_value",
+          "settings": {
+            "value_1": "<p>Iphone 13<\/p>",
+            "value_2": "<p>$799<\/p>",
+            "value_3": "<p>6.0 in<\/p>",
+            "value_4": "<p>A15<\/p>",
+            "value_5": "<p>iOS 16<\/p>"
+          }
+        },
+        {
+          "type": "table_value",
+          "settings": {
+            "value_1": "<p>Iphone 14<\/p>",
+            "value_2": "<p>$1299<\/p>",
+            "value_3": "<p>6.5 in<\/p>",
+            "value_4": "<p>A16<\/p>",
+            "value_5": "<p>iOS 16<\/p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

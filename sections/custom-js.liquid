@@ -1,0 +1,25 @@
+{{ section.settings.custom_javascript }}
+
+{% schema %}
+{
+  "name": "Custom JS",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_js",
+      "label": "Javascript code",
+      "info": "Add JS code to create advanced customizations."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom JS"
+    }
+  ]
+}
+{% endschema %}
+
+{% javascript %}
+
+{% endjavascript %}
