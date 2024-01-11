@@ -441,7 +441,7 @@ window.SLIDECART_UPDATED = (cart) => {
     window.SLIDECART_SET_CART(newCart);
 
 };
-*/
+
 
 fetch("https://get.geojs.io/v1/ip/geo.json")
 .then((res) => {return res.json();})
@@ -477,6 +477,7 @@ fetch("https://get.geojs.io/v1/ip/geo.json")
 window.SLIDECART_LOADED = function(cart) {          
   window.SLIDECART_STATE().settings.shipping_protection_enable_default = true
 }
+*/
 </script>
 {% comment %}END OF APPHQ{% endcomment %}
   
