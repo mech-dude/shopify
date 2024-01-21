@@ -213,7 +213,23 @@
 </head>
 <body class="template-{{ request.page_type | handle }}">
 
+<style>
+  #slidecarthq .free-gifts .slick-track {
+    display: block;
+    width: auto;
+}
 
+#slidecarthq .free-gifts .slick-slide {
+    display: flex;
+    width: auto;
+    flex-direction: row;
+}
+
+
+#slidecarthq .free-gifts-item {
+    display: flex;
+}
+</style>
   
 {% comment %}APPHQ{% endcomment %}
 
