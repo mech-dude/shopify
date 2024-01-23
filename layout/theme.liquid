@@ -213,7 +213,7 @@
 </head>
 <body class="template-{{ request.page_type | handle }}">
 
-<style>
+<style>/*
   #slidecarthq .free-gifts .slick-track {
     display: block;
     width: auto !important;
@@ -243,10 +243,25 @@
 
 #slidecarthq .upsell-add button {
   width: max-content;
+}*/
+
+#slidecarthq .upsell-item {
+    display: flex;
+    flex-direction: column;
+    width: auto;
 }
+
+#slidecarthq .upsells-stacked {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+}  
 </style>
 <script>
 var country_code = `{{ localization.country.iso_code }}`;
+  
 console.log(country_code);
 </script>
 {% comment %}APPHQ{% endcomment %}
