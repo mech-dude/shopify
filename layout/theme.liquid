@@ -213,20 +213,6 @@
 </head>
 <body class="template-{{ request.page_type | handle }}">
 
-  <!-- Slide Cart Edits - Start -->
-  {% if customer.tags contains "wholesale" %}
-    <script>
-      // disable tiered rewards for wholesale customers - start
-      window.SLIDECART_LOADED = () => {
-        if (window.SLIDECART_STATE().settings) {
-          window.SLIDECART_STATE().settings.rewards = false;
-        }
-      }
-      // disable tiered rewards for wholesale customers - end
-    </script>
-  {% endif %}
-  <!-- Slide Cart Edits - End -->
-
 <style>/*
   #slidecarthq .free-gifts .slick-track {
     display: block;
