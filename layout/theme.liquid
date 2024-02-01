@@ -220,6 +220,8 @@
         if (window.SLIDECART_STATE && window.SLIDECART_STATE().settings) {
           console.log('disabling...');
           window.SLIDECART_STATE().settings.rewards = false;
+        } else {
+          console.log('not found');
         }
       });
       // disable tiered rewards for wholesale customers - end
