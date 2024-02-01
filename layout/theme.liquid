@@ -216,14 +216,11 @@
   {% if customer.tags contains "wholesale" %}
     <script>
       // disable tiered rewards for wholesale customers - start
-      addEventListener("DOMContentLoaded", () => {
-        if (window.SLIDECART_STATE && window.SLIDECART_STATE().settings) {
-          console.log('disabling...');
+      window.SLIDECART_LOADED = () => {
+        if (window.SLIDECART_STATE().settings) {
           window.SLIDECART_STATE().settings.rewards = false;
-        } else {
-          console.log('not found');
         }
-      });
+      }
       // disable tiered rewards for wholesale customers - end
     </script>
   {% endif %}
