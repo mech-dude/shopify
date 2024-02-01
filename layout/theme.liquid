@@ -218,6 +218,7 @@
       // disable tiered rewards for wholesale customers - start
       addEventListener("DOMContentLoaded", () => {
         if (window.SLIDECART_STATE && window.SLIDECART_STATE().settings) {
+          console.log('disabling...');
           window.SLIDECART_STATE().settings.rewards = false;
         }
       });
