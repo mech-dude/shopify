@@ -264,6 +264,7 @@
     if (scDiscountReward && itemHasOrigin && !scDiscountRewardActive) {
       // activate slide cart origin discount reward
       window.SLIDECART_STATE().settings.rewards_tiers.push(scDiscountReward);
+      window.SLIDECART_UPDATE();
     } else if (scDiscountReward && !itemHasOrigin && scDiscountRewardActive) {
       // remove slide cart origin discount reward
       window.SLIDECART_STATE().settings.rewards_tiers.forEach((reward, index, arr) => {
