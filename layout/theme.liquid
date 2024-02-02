@@ -234,9 +234,8 @@
         data.products.forEach(product => {
           originsProducts.push(product.handle);
         });
+        window.SLIDECART_UPDATE();
       })
-      
-    setTimeout(window.SLIDECART_UPDATE, 2000);
   }
   
   window.SLIDECART_UPDATED = cart => {
