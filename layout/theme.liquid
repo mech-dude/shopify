@@ -239,7 +239,7 @@
   }
   
   window.SLIDECART_UPDATED = cart => {
-    console.log('updated... ', originsProducts);
+    console.log('updated... ');
     let scDiscountRewardActive = false;
     let itemHasOrigin = false;
     
@@ -256,6 +256,10 @@
         itemHasOrigin = true;
       }
     });
+    
+    console.log('scDiscountReward: ', scDiscountReward);
+    console.log('itemHasOrigin: ', itemHasOrigin);
+    console.log('scDiscountRewardActive: ', scDiscountRewardActive);
     
     if (scDiscountReward && itemHasOrigin && !scDiscountRewardActive) {
       // activate slide cart origin discount reward
