@@ -213,6 +213,42 @@
 </head>
 <body class="template-{{ request.page_type | handle }}">
 
+  <!-- Slide Cart Edits - Start -->
+  <script>
+    const scNewTimer = (duration, display) => {
+      let minutes, seconds, timer = duration;
+      
+      setInterval(() => {
+        minutes = parseInt(timer / 60);
+        seconds = parseInt(timer % 60);
+  
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+  
+        display.textContent = minutes + ":" + seconds;
+  
+        if (--timer < 0) {
+            timer = duration;
+        }
+      }, 1000);
+    }
+    
+    window.SLIDECART_LOADED = () => {
+      // slide cart infinite timer - start
+      const scTimerDuration = window.SLIDECART_STATE().settings.countdown_time;
+      
+      if (scTimerDuration && scTimerDuration >= 1) {
+        const scTimers = document.querySelectorAll('#slidecarthq .announcements .slidecarthq-countdown');
+        scTimers.forEach(timer => {
+          timer.classList.replace("slidecarthq-countdown", "slidecarthq-countdown-new");
+          scNewTimer(60*scTimerDuration, timer);
+        });
+      }
+      // slide cart infinite timer - end
+    }
+  </script>
+  <!-- Slide Cart Edits - End -->
+
 <style>/*
   #slidecarthq .free-gifts .slick-track {
     display: block;
