@@ -213,6 +213,56 @@
 </head>
 <body class="template-{{ request.page_type | handle }}">
 
+  <!--Amp Cart edits-->
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    let observer = new MutationObserver(callback),
+    observerOptions = {
+        subtree: true,
+        childList: true,
+        attributeFilter: ['class'] 
+    };
+    
+    const watcher = setInterval(() => {
+      const conversionCart = document.querySelector('.amp-cart');
+      if (conversionCart) {
+      console.log("AMP Cart Loaded!");
+      clearInterval(watcher);
+      observer.observe(conversionCart, observerOptions);
+      }
+    }, 100);
+
+});
+
+function callback(mutations) {
+  for (let mutation of mutations) {
+      if(mutation.target.classList.contains("amp-cart--open")){
+          console.log("AMP Cart Opened");
+          // Add custom JS whenever AMP Cart has been opened
+
+        if(mutation.target.querySelector(".amp-cart-drawer--scrollable .amp-cart__cart-lines").children.length == 0){
+          console.log("AMP Cart is empty");
+          // Add custom JS whenever AMP Cart is empty after cart is opened
+        }
+      }
+      if(mutation.target.classList.contains("amp-cart") && mutation.target.classList.contains("false")){
+          console.log("AMP Cart Closed");
+          // Add custom JS whenever AMP Cart has been closed
+      }
+      if (mutation.type === 'childList' && mutation.target.classList.contains("amp-cart__cart-lines") && mutation.removedNodes.length > 0) {
+          console.log('AMP Cart item removed');
+          // Add custom JS whenever any AMP Cart item has been removed
+      }
+      if (mutation.type === 'childList' && mutation.target.classList.contains("amp-cart__cart-lines") && mutation.target.children.length == 0) {
+          console.log('AMP Cart is emptied');
+          // Add custom JS whenever all AMP Cart items has been removed
+      }
+  }
+}
+  </script>
+  <!--Amp cart edits ends-->
+
   <!-- Slide Cart Edits - Start -->
   <script>
     const scNewTimer = (duration, display) => {
