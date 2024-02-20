@@ -237,6 +237,7 @@
 
 function callback(mutations) {
   for (let mutation of mutations) {
+      console.log(mutation);
       if(mutation.target.classList.contains("amp-cart--open")){
           console.log("AMP Cart Opened");
           // Add custom JS whenever AMP Cart has been opened
