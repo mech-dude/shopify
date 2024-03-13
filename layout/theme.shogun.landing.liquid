@@ -226,7 +226,93 @@ This file can be re-written at any time.
   
   {{ content_for_layout }}
   
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    let observer = new MutationObserver(callback),
+    observerOptions = {
+        subtree: true,
+        childList: true,
+        attributeFilter: ['class'] 
+    };
+    
+    const watcher = setInterval(() => {
+      const conversionCart = document.querySelector('.amp-cart');
+      if (conversionCart) {
+      console.log("AMP Cart Loaded!");
+      clearInterval(watcher);
+      observer.observe(conversionCart, observerOptions);
+      }
+    }, 100);
+
+});
+
+function callback(mutations) {
+  for (let mutation of mutations) {
+      console.log(mutation);
+      if(mutation.target.classList.contains("amp-cart--open")){
+          console.log("AMP Cart Opened");
+          // Add custom JS whenever AMP Cart has been opened
+
+        if(mutation.target.querySelector(".amp-cart-drawer--scrollable .amp-cart__cart-lines").children.length == 0){
+          console.log("AMP Cart is empty");
+          // Add custom JS whenever AMP Cart is empty after cart is opened
+        }
+      }
+      if(mutation.target.classList.contains("amp-cart") && mutation.target.classList.contains("false")){
+          console.log("AMP Cart Closed");
+          // Add custom JS whenever AMP Cart has been closed
+      }
+      if (mutation.type === 'childList' && mutation.target.classList.contains("amp-cart__cart-lines") && mutation.removedNodes.length > 0) {
+          console.log('AMP Cart item removed');
+          // Add custom JS whenever any AMP Cart item has been removed
+      }
+      if (mutation.type === 'childList' && mutation.target.classList.contains("amp-cart__cart-lines") && mutation.target.children.length == 0) {
+          console.log('AMP Cart is emptied');
+          // Add custom JS whenever all AMP Cart items has been removed
+      }
+  }
+}
+  </script>
+<script>
+    const scNewTimer = (duration, display) => {
+      let minutes, seconds, timer = duration;
+      
+      setInterval(() => {
+        minutes = parseInt(timer / 60);
+        seconds = parseInt(timer % 60);
+  
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+  
+        display.textContent = minutes + ":" + seconds;
+  
+        if (--timer < 0) {
+            timer = duration;
+        }
+      }, 1000);
+    }
+    
+    window.SLIDECART_LOADED = () => {
+      // slide cart infinite timer - start
+      const scTimerDuration = window.SLIDECART_STATE().settings.countdown_time;
+      
+      if (scTimerDuration && scTimerDuration >= 1) {
+        const scTimers = document.querySelectorAll('#slidecarthq .announcements .slidecarthq-countdown');
+        scTimers.forEach(timer => {
+          timer.classList.replace("slidecarthq-countdown", "slidecarthq-countdown-new");
+          scNewTimer(60*scTimerDuration, timer);
+        });
+      }
+      // slide cart infinite timer - end
+    }
+  </script>
+<script>
+var country_code = `{{ localization.country.iso_code }}`;
+  
+console.log(country_code);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     axios.get("https://get.geojs.io/v1/ip/geo.json")
       .then((response) => {
@@ -446,7 +532,7 @@ window.SLIDECART_UPDATED = (cart) => {
     window.SLIDECART_SET_CART(newCart);
 
 };
-*/
+
 
 fetch("https://get.geojs.io/v1/ip/geo.json")
 .then((res) => {return res.json();})
@@ -482,6 +568,7 @@ fetch("https://get.geojs.io/v1/ip/geo.json")
 window.SLIDECART_LOADED = function(cart) {          
   window.SLIDECART_STATE().settings.shipping_protection_enable_default = true
 }
+*/
 </script>
 <script src="//cdn.codeblackbelt.com/widgets/js/core/collections-add-to-cart/main.min.js?shop=juansebastian-teststore.myshopify.com" defer></script>
 <script type="application/json" data-cart-routes>
@@ -492,7 +579,7 @@ window.SLIDECART_LOADED = function(cart) {
     }
   </script>
 <script>function superbarLoader(e,t){if(e){var a=document.createElement("script"),d=!1,n=document.getElementsByTagName("head")[0];a.onload=a.onreadystatechange=function(){d||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState||(d=!0,t(),a.onload=a.onreadystatechange=null,n&&a.parentNode&&n.removeChild(a))},a.setAttribute("type","text/javascript"),a.setAttribute("src",e),n.appendChild(a)}};superbarLoader("https://cdn.jsdelivr.net/gh/apphq/superbar-dist@master/superbar.js?"+(new Date).getTime(), function() {window.SUPERBAR_INIT({{ product | json }}, '{{ shop.money_format }}', '{{ product.selected_or_first_available_variant.id }}', {{ cart | json }}, "{{ template }}")})</script>
-<script src="//cool-image-magnifier.product-image-zoom.com/js/core/main.min.js?timestamp=1701890736&shop=juansebastian-teststore.myshopify.com" defer></script>
+<script src="//cool-image-magnifier.product-image-zoom.com/js/core/main.min.js?timestamp=1710342561&shop=juansebastian-teststore.myshopify.com" defer></script>
   <style type="text/css">
     body, html {
       width: 100% !important;
